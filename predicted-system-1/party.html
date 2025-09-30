@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Wrist - Info Only</title>
+	<link rel="stylesheet" href="style.css">
+	<style>
+		/* Keep only the info button and popup visible; fix placement bottom-right */
+		html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
+		/* tiled sky background */
+		body { background-image: url('images/bw.gif'); background-repeat: repeat; background-position: 0 0; background-size: auto; }
+		.info-button{position:fixed;right:12px;bottom:12px;z-index:130;display:block;border:0;background:transparent;padding:0;cursor:pointer}
+		.info-button img{width:64px;height:auto;display:block}
+		.info-popup{position:fixed;right:92px;bottom:84px;z-index:131;max-width:420px;padding:14px;background:rgba(255,255,255,0.98);border-radius:8px;box-shadow:0 10px 40px rgba(0,0,0,0.45)}
+		.info-popup[hidden]{display:none}
+		.info-popup .stats-visual{margin-top:8px}
+
+		/* Centered scroll boxes container and boxes */
+		/* Keep these local so they don't depend on external CSS */
+		.centered-section { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: calc(100% - 80px); max-width: 1100px; display: flex; gap: 20px; align-items: stretch; justify-content: center; box-sizing: border-box; padding: 10px; }
+		.scroll-box { background: rgba(255,255,255,0.95); border-radius: 10px; box-shadow: 0 6px 18px rgba(0,0,0,0.25); overflow: auto; padding: 16px; color: #111; }
+		/* Make three columns on wide screens, stack on narrow screens */
+		.scroll-box { flex: 1 1 0; min-width: 220px; max-height: 60vh; }
+		/* optional inner heading */
+		.scroll-box h3 { margin-top: 0; margin-bottom: 8px; font-size: 1.05rem; }
+		/* responsive breakpoint: stack vertically on small viewports */
+		@media (max-width: 800px) {
+			.centered-section { flex-direction: column; width: calc(100% - 40px); max-width: 760px; }
+			.scroll-box { max-height: 38vh; }
+		}
+
+		/* When reusing music page box classes inside the centered-section,
+		   reset positioning so they sit in the flex layout but keep their
+		   visual appearance (gradients, dashed border, shadow). */
+		.centered-section .events-box,
+		.centered-section .manifest-box,
+		.centered-section .recs-box {
+			position: static !important;
+			left: auto !important;
+			top: auto !important;
+			right: auto !important;
+			max-width: 100% !important;
+			box-sizing: border-box;
+		}
+
+		/* Panel helpers: uniform gif sizing, top-aligned columns, and scrollable boxes */
+		.panel-wrap{display:flex;gap:20px;width:100%;align-items:flex-start}
+		.panel-column{display:flex;flex-direction:column;gap:8px;flex:1 1 0;min-width:220px;align-items:stretch}
+		.panel-gif{display:block;width:100%;max-height:96px;object-fit:contain;border-radius:6px;box-shadow:0 6px 18px rgba(0,0,0,0.35)}
+		.panel-box{position:static !important;max-width:100% !important;box-sizing:border-box;overflow:auto;max-height:46vh;padding:10px}
+
+		/* spacing for item notes inside event list items */
+			.events-box .item-note{margin-top:8px;margin-bottom:10px;padding-top:4px;color:#444;font-size:0.92rem}
+			/* photo embedded under an item note */
+			.events-box .item-photo{display:block;max-width:100%;height:auto;border-radius:6px;margin-top:8px;box-shadow:0 6px 18px rgba(0,0,0,0.25)}
+			/* small inline image that appears between title and note */
+			.inline-item-img{display:block;max-width:200px;height:auto;margin-top:6px;margin-bottom:6px;border-radius:4px;box-shadow:0 6px 12px rgba(0,0,0,0.18)}
+			/* larger variant used for Lock Books cover and to allow lockets/bold to be larger */
+			.inline-item-img.lock-large{max-width:300px;width:90%;margin-left:auto;margin-right:auto;display:block}
+
+			/* ensure inline images don't overflow on narrow screens */
+			@media (max-width:800px){
+				.inline-item-img{max-width:140px}
+				.inline-item-img.lock-large{max-width:180px;width:80%}
+			}
+		@media (max-width:800px){
+			.panel-gif{max-height:78px}
+			.panel-box{max-height:38vh}
+		}
+
+		/* toggle button and extra content revealed area */
+		.panel-toggle{background:transparent;border:0;color:#2b0036;font-weight:700;cursor:pointer;padding:0;font-size:1.05rem;text-align:left}
+		.panel-toggle:focus{outline:2px solid #a77bff;outline-offset:2px}
+		.panel-extra{display:none;margin-top:8px;padding-top:8px;border-top:1px dashed rgba(0,0,0,0.06);font-size:13px;color:#222}
+		.panel-extra[aria-hidden="false"]{display:block}
+
+		/* toggle button and extra content revealed area */
+		.panel-toggle{background:transparent;border:0;color:#2b0036;font-weight:700;cursor:pointer;padding:0;font-size:1.05rem;text-align:left}
+		.panel-toggle:focus{outline:2px solid #a77bff;outline-offset:2px}
+		.panel-extra{display:none;margin-top:8px;padding-top:8px;border-top:1px dashed rgba(0,0,0,0.06);font-size:13px;color:#222}
+		.panel-extra[aria-hidden="false"]{display:block}
+
+		/* Panel helpers: uniform gif sizing, top-aligned columns, and scrollable boxes */
+		.panel-wrap{display:flex;gap:20px;width:100%;align-items:flex-start;}
+		.panel-column{display:flex;flex-direction:column;gap:8px;flex:1 1 0;min-width:220px;align-items:stretch}
+		.panel-gif{display:block;width:100%;max-height:96px;object-fit:contain;border-radius:6px;box-shadow:0 6px 18px rgba(0,0,0,0.35)}
+		.panel-box{position:static !important;max-width:100% !important;box-sizing:border-box;overflow:auto;max-height:46vh;padding:10px}
+		/* Slightly reduce gif size on small screens */
+		@media (max-width:800px){
+			.panel-gif{max-height:78px}
+			.panel-box{max-height:38vh}
+		}
+	</style>
+</head>
+<body>
+
+<a class="home-link" href="swag.html" title="Home"><img src="images/earth.gif" alt="Home"></a>
+
+<!-- Centered panels using music page box styles -->
+<section class="centered-section" aria-label="Featured panels">
+	<div class="panel-wrap">
+		<!-- Panel 1: events-style -->
+		<div class="panel-column">
+			<img class="panel-gif" src="images/t2.gif" alt="Classes" />
+			<aside class="events-box panel-box" aria-labelledby="box1-title">
+									<li>
+						<strong>Weldingcareernow — Welding schools near you!</strong>
+						<div class="item-note">I did some metal casts recently, so maybe that's why I'm getting an ad about a similar practice. But I've been wanting to get back into gas welding. Here's a photo from back then. #tb</div>
+						<img class="item-photo" src="https://64.media.tumblr.com/47f7bbdee5df037f38a0a7059f6f5116/tumblr_ocwiw9oDN21ucaypfo1_1280.jpg" alt="welding photo" />
+					</li>	
+				<li>
+						<strong>Gray Area, SF — Creative Code for the Web (13-week intensive)</strong>
+						<div class="item-note">I follow them already.</div>
+					</li>
+					<li>
+						<strong>AJ Morales — Intro to Synthesizers (free Zoom session)</strong>
+						<div class="item-note">If there's anything I should be it's a musician...from advertising music to advertising classes to learn how to make said music. Real!</div>
+					</li>
+				</ul>
+				<div id="extra-1" class="panel-extra" aria-hidden="true">More details about events: dates, links, personal notes, and follow-ups can go here.</div>
+			</aside>
+		</div>
+
+		<!-- Panel 2: manifest-style -->
+		<div class="panel-column">
+<img class="panel-gif" src="images/t1.gif" alt="Classes" />
+			<aside class="events-box panel-box" aria-labelledby="box1-title">
+					<li>
+						<strong>Seianime, TX — Paint class to bring “Bold and “Brash” to light</strong>
+						<img class="inline-item-img" src="images/bold.png" alt="Seianime bold" />
+						<div class="item-note">My feed is full of Spongebob memes and I recently googled the Bold and Brash painting, so it's no surprise this ad popped up. Unfortunately, I'm not anywhere near Texas.</div>
+					</li>
+					<li>
+						<strong>Adobe Express — install promo (free treats/merch) </strong>
+						<div class="item-note">I clicked this ad because it's an event at SJSU + it said free chomps!!</div>
+						<div class="item-note">Didn't go, tho.</div>
+					</li>
+					<li>
+						<strong>Covet Art Gallery — Cloud 9.0 open call</strong>
+						<div class="item-note">I clicked this ad because it's an open call for a gallery and the theme was magical, dreamy, surreal, cosmic, futuristic, etc. I thought it was interesting timing because I saw this after making these lockets, which are pretty dreamy, imo.</div>
+						<img class="inline-item-img lock-large" src="images/lockets.jpg" alt="lockets" />
+					</li>
+				</ul>
+				<div id="extra-1" class="panel-extra" aria-hidden="true">More details about events: dates, links, personal notes, and follow-ups can go here.</div>
+			</aside>
+		</div>
+
+		<!-- Panel 3: recs-style -->
+		<div class="panel-column">
+<img class="panel-gif" src="images/t3.gif" alt="Classes" />
+			<aside class="events-box panel-box" aria-labelledby="box1-title">
+					<li>
+						<strong>Lock Books — “Overclocked: GPU Box Art” (art book)</strong>
+						<img class="inline-item-img lock-large" src="images/lock.png" alt="Lock Books cover" />
+						<div class="item-note">"From the mid-’90s to early 2010s, PC gamers were greeted with a horde of non-brand cybernetic goddesses, mystical wizards, savage ogres, and chrome warriors brandishing giant swords - all promising to unlock the future of gaming."</div>
+						<div class="item-note">This one almost got me. Definitely appealing.</div>
+					</li>
+					<li>
+						<strong>Circuit Mess — “Beep Boop” collectible companions</strong>
+						<div class="item-note">Some kind of modern Tamagotchi.</div>
+					</li>
+					<li>
+						<strong>areaxbrick — “Build Bikini Bottom”</strong>
+						<div class="item-note">Bricked up! Lol. Lego-type of set. Pineapple house. Krusty Krab. Yeah. I clicked because I was like damn, I like so many Spongebob memes, I'm getting merch advertised to me now too.</div>
+					</li>
+				</ul>
+				<div id="extra-1" class="panel-extra" aria-hidden="true">More details about events: dates, links, personal notes, and follow-ups can go here.</div>
+			</aside>
+		</div>
+	</div>
+</section>
+
+	<!-- right-side info button that toggles the stats popup -->
+	<button id="info-button" class="info-button" aria-haspopup="dialog" aria-controls="info-popup" aria-expanded="false" title="Show ad stats">
+		<img src="images/info.gif" alt="info" />
+	</button>
+
+
+	<div id="info-popup" class="info-popup" role="dialog" aria-labelledby="info-title" hidden>
+		<div class="info-popup-inner" tabindex="-1">
+			<h3 id="info-title">Ad stats</h3>
+			<div class="stats-numbers">
+				<div><strong>Total viewed</strong><div class="stat-value">86</div></div>
+				<div><strong>Total served</strong><div class="stat-value">108</div></div>
+				<div><strong>Total clicked</strong><div class="stat-value">22</div></div>
+				<div><strong>Art practice clicks</strong><div class="stat-value">8</div></div>
+			</div>
+			<div class="stats-visual">
+				<svg class="retro-pie" viewBox="0 0 100 100" width="140" height="140" role="img" aria-hidden="true">
+					<circle cx="50" cy="50" r="48" class="pie-outline" />
+					<circle cx="50" cy="50" r="30" class="pie-slice viewed" data-value="86"/>
+					<circle cx="50" cy="50" r="30" class="pie-slice clicked" data-value="22"/>
+					<!-- Consolidated art practice slices into one music slice (3+2+3 = 8) -->
+					<circle cx="50" cy="50" r="30" class="pie-slice music" data-value="8"/>
+				</svg>
+				<div class="pie-legend"><div><span class="legend-swatch viewed-swatch"></span>Viewed — 86</div><div><span class="legend-swatch clicked-swatch"></span>Clicked — 22</div><div><span class="legend-swatch music-swatch"></span>Music — 8</div></div>
+			</div>
+			<p class="stat-note retro-note">Art practice–related clicks are <strong>8</strong> out of <strong>108</strong> total served ads — that's <strong>7.41%</strong> of all ads served.</p>
+		</div>
+	</div>
+
+	<script>
+	(function(){
+		const btn = document.getElementById('info-button');
+		const popup = document.getElementById('info-popup');
+		function openPopup(){
+			popup.hidden = false;
+			btn.setAttribute('aria-expanded','true');
+			popup.querySelector('.info-popup-inner').focus();
+		}
+		function closePopup(){
+			popup.hidden = true;
+			btn.setAttribute('aria-expanded','false');
+			btn.focus();
+		}
+		btn.addEventListener('click', function(e){e.stopPropagation(); if(popup.hidden) openPopup(); else closePopup();});
+		document.addEventListener('click', function(ev){ if(!popup.hidden && !popup.contains(ev.target) && ev.target !== btn) closePopup();});
+		document.addEventListener('keydown', function(ev){ if(ev.key === 'Escape' && !popup.hidden) closePopup();});
+	})();
+	</script>
+
+	<script>
+	// Toggle extra panel content when title buttons are clicked
+	(function(){
+		const toggles = document.querySelectorAll('.panel-toggle');
+		toggles.forEach(btn => {
+			const targetId = btn.getAttribute('aria-controls');
+			const target = document.getElementById(targetId);
+			if(!target) return;
+			btn.addEventListener('click', function(){
+				const expanded = btn.getAttribute('aria-expanded') === 'true';
+				btn.setAttribute('aria-expanded', String(!expanded));
+				target.setAttribute('aria-hidden', String(expanded));
+			});
+			btn.addEventListener('keydown', function(e){
+				if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
+			});
+		});
+	})();
+	</script>
+</script>
+<script src="scripts/donut-normalize.js"></script>
+</body>
+</html>

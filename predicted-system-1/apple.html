@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Apple — Predicted System</title>
+	<link rel="stylesheet" href="style.css">
+	<style>
+		html,body{height:100%;margin:0}
+		body{
+			/* Use tiled 1.gif as the page background */
+			background-image: url('images/1.gif');
+			background-repeat: repeat; /* tile the gif */
+			/* keep position and size default for tiling */
+			/* center the stage container */
+			display:flex;
+			align-items:center;
+			justify-content:center;
+			min-height:100vh;
+			font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+			-webkit-font-smoothing:antialiased;
+			-moz-osx-font-smoothing:grayscale;
+			padding:40px;
+			overflow:hidden; /* prevent page scroll; inner .scroll remains scrollable */
+		}
+
+		/* stage centers the panel and holds the credit image above it */
+		.stage{
+			width: min(92%, 760px);
+			max-width:760px;
+			display:flex;
+			flex-direction:column;
+			align-items:center;
+			justify-content:center;
+			position:relative;
+		}
+
+		.panel{
+			width:100%;
+			max-height:68vh; /* shorter panel */
+			background: rgba(255,255,255,0.95);
+			border-radius: 12px;
+			border: 2px solid rgba(0,0,0,0.12);
+			box-shadow: 0 10px 30px rgba(0,0,0,0.30);
+			overflow: hidden;
+			padding: 20px;
+		}
+
+		.scroll{
+			height: calc(56vh - 20px); /* make the scroll area shorter */
+			overflow-y: auto;
+			color: #111;
+			line-height: 1.7;
+			font-size: 17px;
+			padding-right: 10px;
+			padding-left:6px;
+		}
+
+		.credit-img{
+			width:100%;
+			max-width:320px; /* increased size so image is larger but still fits */
+			align-self:flex-start; /* left-align relative to the stage */
+			margin-bottom:12px;
+		}
+
+		.credit-img img{width:100%;height:auto;display:block}
+
+		.scroll p{margin:0 0 1rem}
+
+		/* Nice thin scrollbar for webkit */
+		.scroll::-webkit-scrollbar{width:12px}
+		.scroll::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.18);border-radius:8px}
+
+		@media (max-width:520px){
+			.panel{padding:18px}
+			.scroll{font-size:16px}
+			.credit-img{max-width:180px}
+		}
+
+		</style>
+		</head>
+		<body>
+		<a class="home-link" href="swag.html" title="Home"><img src="images/earth.gif" alt="Home"></a>
+			<div class="stage">
+				<div class="credit-img" aria-hidden="true">
+					<img src="images/y.gif" alt="y-r" />
+				</div>
+				<main class="panel" role="main" aria-label="Main content">
+					<div class="scroll">
+			<p>Everyone knows “you’re a product of your environment” and usually when this is discussed, we're talking about outside-factors we can’t really control. But in the current day in age, we have even more influences that we choose to allow to infiltrate our subconscious and everyday decision making. I get on my phone, and I’m being targeted across every app.</p>
+
+			<p>When I bring this up, the hoes get mad. Like what are you trying to say? It really be that damn phone? Are you saying we have no agency, a picture/ad can cement into our brain? No way are we that impressionable. Diva, chill. I’m saying it’s interesting to think about. We choose to be influenced. Sometimes we get what we want. Other times we get what we think we want. And a lot of the time, the influence occurs over a span of years; it’s not noticeable until much later. And all of this is hard to calculate. How does a social media algorithm even work and how does it change based on what your phone sees, hears, goes, and the data inputted across other apps? What about when we’re thinking, and our phone never sees the thought, never hears about it, we never search it up across any of our devices, and it's something so specific… but it shows up on our feed. Girl, I’ve been talking about this since 2011. But you’re following me now, right?</p>
+
+			<p>My brain and the feed predict before they perceive. My cortex throws up a quick hallucination of the world about eighty milliseconds ahead of reality, then edits life to match the guess. The algorithms on my phone do the same thing. It pre-renders a micro-future version of “me” six posts down and slides the winning forecast right under my thumb. So when an oddly specific ad lands like it read my diary, that’s not sorcery. It’s two predictive engines, one living, one silicon, syncing their forecasts. Each sync tightens the loop until I can’t tell which side served first. Every thought sparks a mini-GIF in my head, every swipe sparks a mini-GIF in the cloud, and when they overlay at fifty-percent opacity I feel that déjà-vu zap: did I dream this desire or did the algorithm seed it? Honestly, both. In that moment my cortex is the UI and the UI is my cortex, co-authoring the next frame together.</p>
+
+			<p>None of this cancels free will. Or does it? LOL, would that even stop you? Agency is a duet, not a solo. The groove is still yours to improvise, just remember the backing track is auto-tuned by math. If the remix feels off, swap the playlist; new influences, new neurons, new weights, new you.</p>
+
+			<p>Anyways, I made this site to go over some of the ads I clicked on, clearly. But ideally, I’d like to expand this data set to include ads I scrolled by, and how much time each ad was visible on my phone screen as I scrolled by. Interestingly, when you export code on Instagram regarding ads, you see the username of the account, caption of the post, and the time stamp for when you clicked. If you go to your accounts center, there’s a category called “Ad Preferences” and this shows you ads you clicked on, ads you saved, advertisers you saw ads from, and ad topics (customizable). Ideally, I’d like to go through all the data over the span of a year and try to make connections between the ads and my consumer habits. A lot of questions come up, like how can I compare that data across apps and my other devices (laptop, computer, etc). I guess it’s hard to track for a reason.</p>
+		</div>
+	</main>
+			</div> <!-- .stage -->
+		</body>
+</html>
