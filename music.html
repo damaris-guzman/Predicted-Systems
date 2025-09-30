@@ -1,0 +1,245 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Music</title>
+	<link rel="stylesheet" href="style.css">
+	<style>
+		/* Left fixed column with stacked images: eventos.gif above djs.gif */
+		.left-images {
+			position: fixed;
+			left: 20px;
+			top: 100px;
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			z-index: 1000;
+		}
+			left-images img {
+			display: block;
+			max-width: 180px;
+			height: auto;
+			border: 0;
+		}
+		/* add left padding so main content doesn't sit beneath the fixed images */
+		body {
+			padding-left: 220px;
+		}
+		@media (max-width: 600px) {
+			/* On small screens, move images inline at top so they don't cover content */
+			.left-images { position: static; flex-direction: row; gap: 8px; padding: 12px 0; }
+			body { padding-left: 0; }
+		}
+	</style>
+</head>
+<body class="trippy-bg">
+
+<a class="home-link" href="swag.html" title="Home"><img src="images/earth.gif" alt="Home"></a>
+
+	<div class="left-images">
+		<img src="images/eventos.gif" alt="Eventos">
+		<img src="images/djs.gif" alt="DJs">
+	</div>
+
+	<!-- net-art style box listing music events clicked -->
+	<aside class="events-box" aria-labelledby="events-title">
+		<h3 id="events-title">Music Events advertised to me that I clicked on</h3>
+		<ul>
+			<li><strong>YUNG LEAN – Fox Theater, Oakland</strong></li>
+			<li><strong>Purity Ring - The Warfield, SF</strong></li>
+			<li><strong>ARTMS – World Tour</strong></li>
+			<li><strong>Coachella</strong></li>
+			<li><strong>WENDY 1st WORLD TOUR &lt;W:EALIVE&gt;</strong></li>
+			<li><strong>✧ATARAXIA : VERTIGO✧ rave event - Temple, SF</strong></li>
+		</ul>
+	</aside>
+
+	<!-- right next to the events box: clicked artists (moved for layout/accessibility) -->
+	<aside class="artists-box" aria-labelledby="artists-title">
+		<h3 id="artists-title">Music Advertised to me that I clicked on</h3>
+		<ul>
+			<li><strong>Ghost</strong></li>
+			<li><strong>5n0w_</strong></li>
+			<li><strong>CRE2K</strong></li>
+		</ul>
+		<p class="artists-note">Each song advertised to me was electronic, hyperpop type of music.</p>
+	</aside>
+
+	<!-- compact recommendations box to the right of artists -->
+	<aside class="recs-box compact" aria-labelledby="recs-title">
+		<h3 id="recs-title">Accurate recommendations?</h3>
+		<span class="subtitle">Currently, I'm obsessed with...</span>
+	</aside>
+
+	<!-- hidden player that appears beneath the compact recs box when clicked -->
+	<div class="recs-player" id="recs-player" aria-hidden="true">
+		<iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A2066013123&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+		<div class="credit"><a href="https://soundcloud.com/frostchildren" target="_blank" rel="noopener noreferrer" style="color:#cccccc;text-decoration:none">Frost Children</a> · <a href="https://soundcloud.com/frostchildren/sets/sister-249277048" target="_blank" rel="noopener noreferrer" style="color:#cccccc;text-decoration:none">SISTER</a></div>
+	</div>
+
+	<!-- manifested event section -->
+	<section class="manifest-section" aria-labelledby="manifest-q">
+		<div class="manifest-gif"><img src="images/matrix.gif" alt="matrix gif" /></div>
+
+		<aside class="manifest-box manifest-lowered asideclass" aria-labelledby="manifest-title">
+			<h4 id="manifest-title">Manifestation</h4>
+			<p><strong>ARTMS!</strong> My partner got us tickets to see ARTMS before I saw it as an ad. Yes, I am luck/y.</p>
+		</aside>
+	    <!-- KIRI dance gif (local-first, fallback to external) -->
+	    <div class="manifest-external-gif" aria-hidden="false">
+	        <img src="images/kiri-dance.gif" alt="KIRI DANCE gif" onerror="this.onerror=null;this.src='https://damarisguzman.neocities.org/KIRI%20DANCE.gif'" />
+	    </div>
+	</section>
+
+	</main>
+
+	<!-- right-side info button that toggles the stats popup -->
+	<button id="info-button" class="info-button" aria-haspopup="dialog" aria-controls="info-popup" aria-expanded="false" title="Show ad stats">
+		<img src="images/info.gif" alt="info" />
+	</button>
+
+
+	<div id="info-popup" class="info-popup" role="dialog" aria-labelledby="info-title" hidden>
+		<div class="info-popup-inner" tabindex="-1">
+			<h3 id="info-title">Ad stats</h3>
+			<!-- include the same compact stats content -->
+			<div class="stats-numbers">
+				<div><strong>Total viewed</strong><div class="stat-value">86</div></div>
+				<div><strong>Total served</strong><div class="stat-value">108</div></div>
+				<div><strong>Total clicked</strong><div class="stat-value">22</div></div>
+				<div><strong>Music clicks</strong><div class="stat-value">9</div></div>
+			</div>
+			<div class="stats-visual">
+				<svg class="retro-pie" viewBox="0 0 100 100" width="140" height="140" role="img" aria-hidden="true">
+					<circle cx="50" cy="50" r="48" class="pie-outline" />
+					<circle cx="50" cy="50" r="30" class="pie-slice viewed" data-value="86"/>
+					<circle cx="50" cy="50" r="30" class="pie-slice clicked" data-value="22"/>
+					<circle cx="50" cy="50" r="30" class="pie-slice music" data-value="9"/>
+				</svg>
+				<div class="pie-legend"><div><span class="legend-swatch viewed-swatch"></span>Viewed — 86</div><div><span class="legend-swatch clicked-swatch"></span>Clicked — 22</div><div><span class="legend-swatch music-swatch"></span>Music — 9</div></div>
+			</div>
+			<p class="stat-note retro-note">Music clicks are <strong>9</strong> out of <strong>108</strong> total served ads — that's <strong>8.33%</strong> of all ads served.</p>
+		</div>
+	</div>
+
+	<script>
+	(function(){
+		const btn = document.getElementById('info-button');
+		const popup = document.getElementById('info-popup');
+
+		function openPopup(){
+			popup.hidden = false;
+			btn.setAttribute('aria-expanded','true');
+			popup.querySelector('.info-popup-inner').focus();
+		}
+		function closePopup(){
+			popup.hidden = true;
+			btn.setAttribute('aria-expanded','false');
+			btn.focus();
+		}
+		btn.addEventListener('click', function(e){e.stopPropagation(); if(popup.hidden) openPopup(); else closePopup();});
+		document.addEventListener('click', function(ev){ if(!popup.hidden && !popup.contains(ev.target) && ev.target !== btn) closePopup();});
+		document.addEventListener('keydown', function(ev){ if(ev.key === 'Escape' && !popup.hidden) closePopup();});
+
+		if(!recsBtn || !player) return;
+		recsBtn.setAttribute('role','button');
+		recsBtn.setAttribute('tabindex','0');
+		recsBtn.addEventListener('click', function(e){
+			const open = player.classList.toggle('open');
+			player.setAttribute('aria-hidden', !open);
+		});
+		recsBtn.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); recsBtn.click(); } });
+		document.addEventListener('click', function(ev){ if(player.classList.contains('open') && !player.contains(ev.target) && !recsBtn.contains(ev.target)) { player.classList.remove('open'); player.setAttribute('aria-hidden','true'); } });
+		document.addEventListener('keydown', function(ev){ if(ev.key === 'Escape' && player.classList.contains('open')){ player.classList.remove('open'); player.setAttribute('aria-hidden','true'); } });
+	})();
+	</script>
+
+	<script>
+	// Toggle the Frost Children player when the recommendations box is clicked
+	(function(){
+		const recsBox = document.querySelector('.recs-box.compact');
+		const player = document.getElementById('recs-player');
+		if(!recsBox || !player) return;
+		recsBox.addEventListener('click', function(){
+			const isOpen = player.classList.toggle('open');
+			player.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+			// Focus the iframe when opened for keyboard users
+			if(isOpen){
+				const iframe = player.querySelector('iframe');
+				if(iframe) iframe.focus();
+			}
+		});
+	})();
+	</script>
+	<script>
+	// Toggle manifest box to appear to the right when GIF is clicked
+	(function(){
+		const manifestSection = document.querySelector('.manifest-section');
+		const gif = manifestSection && manifestSection.querySelector('.manifest-gif img');
+		const box = manifestSection && manifestSection.querySelector('.manifest-box');
+		if(!gif || !manifestSection || !box) return;
+		gif.setAttribute('role','button');
+		gif.setAttribute('tabindex','0');
+		gif.addEventListener('click', toggleManifest);
+		gif.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleManifest(); } });
+		function toggleManifest(){
+			const open = manifestSection.classList.toggle('manifest-open');
+			box.setAttribute('aria-hidden', !open);
+			gif.setAttribute('aria-pressed', open);
+		}
+	})();
+	</script>
+
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+	</script>
+
+<!-- Fixed bottom-left SoundCloud player -->
+<div id="soundcloud-fixed-player" style="position:fixed;left:12px;bottom:12px;width:420px;max-width:90vw;z-index:2147483647;background:rgba(0,0,0,0.75);border-radius:6px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,0.6);pointer-events:auto;">
+	<iframe width="100%" height="30" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A115429318&color=%23ff5500&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+	<div style="font-size:10px;color:#e6e6e6;line-break:anywhere;word-break:normal;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;padding:6px 8px;font-family:Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight:100;">
+		<a href="https://soundcloud.com/yung-lean-doer" title="YUNG LEAN" target="_blank" style="color:#e6e6e6;text-decoration:none;">YUNG LEAN</a> · <a href="https://soundcloud.com/yung-lean-doer/yung-lean-marble-phone-ft" title="Yung Lean - Marble Phone (ft. Kreayshawn)" target="_blank" style="color:#e6e6e6;text-decoration:none;">Yung Lean - Marble Phone (ft. Kreayshawn)</a>
+	</div>
+</div>
+
+<script src="scripts/donut-normalize.js"></script>
+</body>
+</html>
+

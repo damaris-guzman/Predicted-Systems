@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<title>Swagmaris</title>
+		<link rel="stylesheet" href="style.css">
+		<style>
+			html,body{height:100%;margin:0}
+			body{font-family:Arial,Helvetica,sans-serif;overflow:hidden;background-color:#0a0a0a}
+
+			/* tiled water background */
+			.water{position:fixed;inset:0;background-image:url('images/water2.webp');background-repeat:repeat;background-position:0 0;background-size:auto;z-index:0}
+
+			/* subtle gradient overlay to add visual depth */
+			.overlay-gradient{position:fixed;inset:0;z-index:1;pointer-events:none;background:linear-gradient(120deg,rgba(255,95,109,0.06),rgba(255,195,113,0.04),rgba(123,97,255,0.05));}
+
+			/* center-bottom container for swagmaris */
+			.center-bottom{position:fixed;left:50%;transform:translateX(-50%);bottom:0;z-index:3;display:flex;align-items:flex-end;justify-content:center}
+			/* wrapper that scales the swag image so child absolute positioning matches visually */
+			.swag-wrapper{display:block;position:relative;transform:scale(2);transform-origin:bottom center}
+			/* make the swag image sized responsively (scaling handled by the wrapper) */
+			img.swag{width:min(80vw,720px);height:auto;display:block;transform-origin:bottom center}
+
+			/* animated ear GIF positioned relative to the swag wrapper (tweak left/top to align precisely) */
+			img.ear-gif{position:absolute;left:12%;top:16%;width:14%;max-width:96px;height:auto;z-index:5;filter:drop-shadow(0 4px 6px rgba(0,0,0,0.35))}
+
+			/* apple overlay positioned above the hat (position is relative to .swag-wrapper) */
+			a.apple-link{position:absolute;left:50%;top:6%;transform:translateX(-50%);z-index:6;display:block}
+			a.apple-link img.apple-overlay{width:9%;max-width:140px;height:auto;display:block;pointer-events:auto;filter:drop-shadow(0 6px 8px rgba(0,0,0,0.45))}
+
+			/* bottom-left wrist link container (fixed) - enlarged ~30% and flush to bottom */
+			a.wrist-link{position:fixed;left:8px;bottom:0;display:block;width:min(29vw,208px);z-index:3}
+			a.wrist-link img.wrist-bottom-left{width:100%;height:auto;display:block;transform-origin:bottom left}
+			/* overlay gif placed on top of the wrist image */
+			a.wrist-link img.mefashion-overlay{position:absolute;left:50%;top:4%;transform:translateX(-50%);width:48%;max-width:120px;height:auto;z-index:4;pointer-events:none;filter:drop-shadow(0 6px 8px rgba(0,0,0,0.45))}
+
+			/* right-side party container */
+			.party-right{position:fixed;right:12px;top:50%;transform:translateY(-50%);z-index:4;display:flex;align-items:center}
+			.party-right a{display:block}
+			.party-right img{width:min(18vw,160px);height:auto;display:block}
+
+			/* fixed apple button (always visible top-right) */
+			 a.apple-fixed{position:fixed;right:14px;top:14px;z-index:99999;display:block;border-radius:10px;padding:6px;background:linear-gradient(180deg,#ffffff10,#ffffff06);backdrop-filter:blur(2px)}
+			 a.apple-fixed img{width:84px;height:auto;display:block;max-width:14vw;filter:drop-shadow(0 8px 14px rgba(0,0,0,0.6));border-radius:8px;border:3px solid rgba(255,255,255,0.9)}
+		</style>
+	</head>
+	<body>
+		<div class="water" aria-hidden="true"></div>
+		<div class="overlay-gradient" aria-hidden="true"></div>
+		<div class="center-bottom">
+			<span class="swag-wrapper" aria-hidden="false">
+				<img src="images/swagmaris.png" alt="swagmaris" class="swag" />
+				<!-- ear GIF from glitter-graphics positioned near left ear (clickable) -->
+				<a href="music.html" title="Music page">
+					<img src="https://dl.glitter-graphics.com/pub/738/738304r69e6gwna9.gif" alt="ear-gif" class="ear-gif" />
+				</a>
+
+				<!-- apple overlay above the hat (clickable) -->
+				<a href="apple.html" class="apple-link" title="Apple page">
+					<img src="images/apple.gif" alt="apple-overlay" class="apple-overlay" />
+				</a>
+			</span>
+		</div>
+		<!-- bottom-left decorative wrist image (clickable) -->
+		<a href="wrist.html" class="wrist-link" title="Wrist page">
+			<img src="images/wrist2.png" alt="wrist" class="wrist-bottom-left" />
+			<!-- overlay mefashion gif on top of the wrist image -->
+			<img src="images/mefashion.gif" alt="mefashion" class="mefashion-overlay" />
+		</a>
+	<!-- fixed apple button for visibility (moved inside body) -->
+	<a href="apple.html" class="apple-fixed" title="Apple page">
+		<img src="images/apple.gif" alt="apple button" />
+	</a>
+	</body>
+	<!-- right-side party gif (clickable) -->
+	<div class="party-right" aria-hidden="false">
+		<a href="party-life.html" title="Party page">
+			<img src="images/party.gif" alt="party-gif" />
+		</a>
+	</div>
+	<!-- custom cursor banner (uses style from style.css) -->
+	<div class="cursor-banner">
+		<a href="https://www.totallyfreecursors.com/" target="_blank" class="tfc" rel="noopener noreferrer">
+			<img src="https://downloads.totallyfreecursors.com/public/CursorsLogo88-31.gif" border="0" width="88" height="31" alt="Free Box Question Pink Glitter Cursors at www.totallyfreecursors.com" />
+		</a>
+	</div>
+	
+	<!-- bottom-right ads GIF and popup -->
+	<div class="ads-container" aria-hidden="false">
+		<button id="ads-button" class="ads-button" aria-haspopup="dialog" aria-expanded="false" aria-controls="ads-popup">
+			<img src="images/ads.gif" alt="ads" />
+		</button>
+		<div id="ads-popup" class="ads-popup" role="dialog" aria-modal="false" aria-labelledby="ads-title" hidden>
+			<div class="ads-popup-inner" tabindex="-1">
+				<p>This website was made to share info on all the ads I clicked on over the last month on Instagram. </p>
+				<p>Why did I click? Diva, I already told you on the previous page. Keep up. ヽ(•‿•)ノ</p>
+				<p style="margin-top:8px">&nbsp;</p>
+			</div>
+		</div>
+	</div>
+	
+	<script>
+	// Toggle the popup when the ads button is clicked
+	(function(){
+		const btn = document.getElementById('ads-button');
+		const popup = document.getElementById('ads-popup');
+		function openPopup(){
+			popup.hidden = false;
+			btn.setAttribute('aria-expanded','true');
+			// move focus into the popup for accessibility
+			const inner = popup.querySelector('.ads-popup-inner');
+			if(inner) inner.focus();
+		}
+		function closePopup(){
+			popup.hidden = true;
+			btn.setAttribute('aria-expanded','false');
+			btn.focus();
+		}
+		btn.addEventListener('click', function(e){
+			e.stopPropagation();
+			if(popup.hidden) openPopup(); else closePopup();
+		});
+		// click outside to close
+		document.addEventListener('click', function(ev){
+			if(!popup.hidden && !popup.contains(ev.target) && ev.target !== btn){
+				closePopup();
+			}
+		});
+		// escape key to close
+		document.addEventListener('keydown', function(ev){
+			if(ev.key === 'Escape' && !popup.hidden){
+				closePopup();
+			}
+		});
+	})();
+	</script>
+</html>
