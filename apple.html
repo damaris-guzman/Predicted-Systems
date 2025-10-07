@@ -21,7 +21,7 @@
 			-webkit-font-smoothing:antialiased;
 			-moz-osx-font-smoothing:grayscale;
 			padding:40px;
-			overflow:hidden; /* prevent page scroll; inner .scroll remains scrollable */
+			overflow:auto; /* allow page scroll on small screens; inner .scroll remains scrollable */
 		}
 
 		/* stage centers the panel and holds the credit image above it */
@@ -100,4 +100,34 @@
 	</main>
 			</div> <!-- .stage -->
 		</body>
+
+<!-- Resources widget: clickable i.gif bottom-right and popup -->
+<div id="resources-root" style="position:fixed;right:12px;bottom:12px;z-index:2147483647;font-family:Arial,Helvetica,sans-serif">
+	<button id="resources-btn" aria-expanded="false" aria-controls="resources-popup" style="background:transparent;border:0;padding:0;cursor:pointer;display:inline-block">
+		<img src="images/i.gif" alt="resources" style="display:block;width:256px;height:auto;border-radius:6px;box-shadow:0 8px 20px rgba(0,0,0,0.5)" />
+	</button>
+	<div id="resources-popup" role="dialog" aria-hidden="true" hidden style="position:absolute;right:0;bottom:80px;max-width:320px;width:calc(100vw - 32px);background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,0.35);padding:12px;color:#111;text-align:left">
+		<h3 style="margin:0 0 8px 0;font-size:15px">Resources used to create this website!</h3>
+		<ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.4">
+			<li><a href="https://gifcities.org/" target="_blank" rel="noopener noreferrer">https://gifcities.org/</a></li>
+			<li><a href="https://vamp1.neocities.org/resources" target="_blank" rel="noopener noreferrer">https://vamp1.neocities.org/resources</a></li>
+			<li><a href="https://bettysgraphics.neocities.org/" target="_blank" rel="noopener noreferrer">https://bettysgraphics.neocities.org/</a></li>
+			<li><a href="https://blinkies.cafe/" target="_blank" rel="noopener noreferrer">https://blinkies.cafe/</a></li>
+			<li><a href="https://caitsith.neocities.org/graphics1" target="_blank" rel="noopener noreferrer">https://caitsith.neocities.org/graphics1</a></li>
+			<li><a href="https://www.glitter-graphics.com/" target="_blank" rel="noopener noreferrer">https://www.glitter-graphics.com/</a></li>
+		</ul>
+	</div>
+</div>
+
+<script>
+;(function(){
+	const btn = document.getElementById('resources-btn');
+	const popup = document.getElementById('resources-popup');
+	function openPopup(){ popup.hidden = false; popup.setAttribute('aria-hidden','false'); btn.setAttribute('aria-expanded','true'); popup.querySelector('a')?.focus(); }
+	function closePopup(){ popup.hidden = true; popup.setAttribute('aria-hidden','true'); btn.setAttribute('aria-expanded','false'); btn.focus(); }
+	btn.addEventListener('click', function(e){ e.stopPropagation(); if(popup.hidden) openPopup(); else closePopup(); });
+	document.addEventListener('click', function(ev){ if(!popup.hidden && !popup.contains(ev.target) && ev.target !== btn) closePopup(); });
+	document.addEventListener('keydown', function(ev){ if(ev.key === 'Escape' && !popup.hidden){ closePopup(); } });
+})();
+</script>
 </html>
