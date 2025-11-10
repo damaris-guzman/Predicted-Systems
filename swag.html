@@ -2,12 +2,12 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,minimum-scale=1,maximum-scale=1" />
 		<title>Swagmaris</title>
 		<link rel="stylesheet" href="style.css">
 		<style>
 			html,body{height:100%;margin:0}
-			body{font-family:Arial,Helvetica,sans-serif;overflow:hidden;background-color:#0a0a0a}
+			body{font-family:Arial,Helvetica,sans-serif;overflow:auto;background-color:#0a0a0a}
 
 			/* tiled water background */
 			.water{position:fixed;inset:0;background-image:url('images/water2.webp');background-repeat:repeat;background-position:0 0;background-size:auto;z-index:0}
@@ -23,26 +23,172 @@
 			img.swag{width:min(80vw,720px);height:auto;display:block;transform-origin:bottom center}
 
 			/* animated ear GIF positioned relative to the swag wrapper (tweak left/top to align precisely) */
-			img.ear-gif{position:absolute;left:12%;top:16%;width:14%;max-width:96px;height:auto;z-index:5;filter:drop-shadow(0 4px 6px rgba(0,0,0,0.35))}
+			img.ear-gif{position:absolute;left:12%;top:8%;width:14%;max-width:96px;height:auto;z-index:5;filter:drop-shadow(0 4px 6px rgba(0,0,0,0.35))}
 
 			/* apple overlay positioned above the hat (position is relative to .swag-wrapper) */
 			a.apple-link{position:absolute;left:50%;top:6%;transform:translateX(-50%);z-index:6;display:block}
 			a.apple-link img.apple-overlay{width:9%;max-width:140px;height:auto;display:block;pointer-events:auto;filter:drop-shadow(0 6px 8px rgba(0,0,0,0.45))}
 
 			/* bottom-left wrist link container (fixed) - enlarged ~30% and flush to bottom */
-			a.wrist-link{position:fixed;left:8px;bottom:0;display:block;width:min(29vw,208px);z-index:3}
+			a.wrist-link{position:fixed;left:-8px;bottom:0;display:block;width:min(29vw,208px);z-index:3}
 			a.wrist-link img.wrist-bottom-left{width:100%;height:auto;display:block;transform-origin:bottom left}
 			/* overlay gif placed on top of the wrist image */
 			a.wrist-link img.mefashion-overlay{position:absolute;left:50%;top:4%;transform:translateX(-50%);width:48%;max-width:120px;height:auto;z-index:4;pointer-events:none;filter:drop-shadow(0 6px 8px rgba(0,0,0,0.45))}
 
 			/* right-side party container */
-			.party-right{position:fixed;right:12px;top:50%;transform:translateY(-50%);z-index:4;display:flex;align-items:center}
+			.party-right{position:fixed;right:28px;top:50%;transform:translateY(-50%);z-index:4;display:flex;align-items:center}
 			.party-right a{display:block}
 			.party-right img{width:min(18vw,160px);height:auto;display:block}
 
 			/* fixed apple button (always visible top-right) */
 			 a.apple-fixed{position:fixed;right:14px;top:14px;z-index:99999;display:block;border-radius:10px;padding:6px;background:linear-gradient(180deg,#ffffff10,#ffffff06);backdrop-filter:blur(2px)}
 			 a.apple-fixed img{width:84px;height:auto;display:block;max-width:14vw;filter:drop-shadow(0 8px 14px rgba(0,0,0,0.6));border-radius:8px;border:3px solid rgba(255,255,255,0.9)}
+
+			/* Mobile-optimized responsive design */
+			@media (max-width: 800px) {
+				html, body {
+					overflow-x: hidden;
+					overflow-y: auto;
+					min-width: auto;
+				}
+				
+				/* Scale up and center main character - force positioning */
+				.center-bottom {
+					position: fixed !important;
+					left: 70% !important;
+					top: 50% !important;
+					bottom: auto !important;
+					right: auto !important;
+					transform: translate(-50%, -50%) !important;
+					display: flex !important;
+					align-items: center !important;
+					justify-content: center !important;
+				}
+				
+				.swag-wrapper {
+					transform: scale(2.25) !important;
+					transform-origin: center center !important;
+					position: relative !important;
+					display: block !important;
+				}
+				
+				/* Make the base image larger on mobile */
+				img.swag {
+					width: min(60vw, 500px) !important;
+					height: auto !important;
+					display: block !important;
+					transform-origin: center center !important;
+				}
+				
+				/* Reposition ear GIF for mobile */
+				img.ear-gif {
+					left: 12%;
+					top: 6%;
+					width: 20%;
+					max-width: 80px;
+				}
+				
+				/* Reposition apple overlay */
+				a.apple-link {
+					top: 4%;
+				}
+				
+				a.apple-link img.apple-overlay {
+					width: 12%;
+					max-width: 64px;
+				}
+				
+				/* Scale down and reposition wrist image */
+				a.wrist-link {
+					left: -15px;
+					bottom: 5vh;
+					width: min(35vw, 120px);
+					z-index: 3;
+				}
+				
+				/* Scale down party GIF */
+				.party-right {
+					right: 15px;
+					top: 35%;
+				}
+				
+				.party-right img {
+					width: min(22vw, 80px);
+				}
+				
+				/* Optimize fixed apple button for mobile */
+				a.apple-fixed {
+					right: 10px;
+					top: 10px;
+					padding: 4px;
+				}
+				
+				a.apple-fixed img {
+					width: 48px;
+					max-width: none;
+				}
+				
+				/* Optimize ads container for mobile - make it highly visible */
+				.ads-container {
+					position: fixed !important;
+					bottom: 20px !important;
+					right: 20px !important;
+					z-index: 999999 !important;
+					display: block !important;
+				}
+				
+				.ads-button {
+					background: rgba(255,255,255,0.9) !important;
+					border: 3px solid #ff6b6b !important;
+					border-radius: 12px !important;
+					padding: 12px !important;
+					box-shadow: 0 8px 24px rgba(0,0,0,0.5) !important;
+					display: block !important;
+				}
+				
+				.ads-button img {
+					width: 64px !important;
+					height: auto !important;
+					display: block !important;
+				}
+				
+				.ads-popup {
+					position: fixed !important;
+					bottom: 120px !important;
+					right: 20px !important;
+					left: 20px !important;
+					max-width: none !important;
+					width: auto !important;
+					background: rgba(255,255,255,0.98) !important;
+					border-radius: 16px !important;
+					padding: 24px !important;
+					box-shadow: 0 16px 48px rgba(0,0,0,0.7) !important;
+					border: 2px solid #ff6b6b !important;
+					z-index: 999998 !important;
+				}
+				
+				.ads-popup-inner {
+					color: #333 !important;
+					font-size: 16px !important;
+					line-height: 1.5 !important;
+				}
+				
+				/* Improve touch targets */
+				a.wrist-link, .party-right a, a.apple-link, a.apple-fixed, .ads-button {
+					min-width: 44px;
+					min-height: 44px;
+					padding: 8px;
+					border-radius: 8px;
+				}
+				
+				/* Add subtle background to touch areas for better visibility */
+				a.wrist-link:active, 
+				.party-right a:active, 
+				a.apple-link:active, 
+				a.apple-fixed:active {
+					background: rgba(255,255,255,0.1);
+				}
+			}
 		</style>
 	</head>
 	<body>
@@ -73,16 +219,10 @@
 		<img src="images/apple.gif" alt="apple button" />
 	</a>
 	</body>
-	<!-- right-side party gif (clickable) -->
+	<!-- right-side party gif -->
 	<div class="party-right" aria-hidden="false">
 		<a href="party-life.html" title="Party page">
 			<img src="images/party.gif" alt="party-gif" />
-		</a>
-	</div>
-	<!-- custom cursor banner (uses style from style.css) -->
-	<div class="cursor-banner">
-		<a href="https://www.totallyfreecursors.com/" target="_blank" class="tfc" rel="noopener noreferrer">
-			<img src="https://downloads.totallyfreecursors.com/public/CursorsLogo88-31.gif" border="0" width="88" height="31" alt="Free Box Question Pink Glitter Cursors at www.totallyfreecursors.com" />
 		</a>
 	</div>
 	
